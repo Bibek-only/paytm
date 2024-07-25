@@ -20,6 +20,8 @@ export async function checkUserInDb(req,res,next){
         return
     }
 
+    
+
     res.send("the user is already exist try another userName")
 
 }

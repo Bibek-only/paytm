@@ -8,4 +8,9 @@ const signupSchema = zod.object(
     }
 )
 
-export {signupSchema}
+const signinSchema = zod.object({
+    userName: zod.string(),
+    password: zod.string()
+})
+
+export {signupSchema, signinSchema}
