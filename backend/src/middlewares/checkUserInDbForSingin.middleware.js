@@ -5,7 +5,7 @@ export async function checkUserInDbForSignin(req,res,next){
     
     // zod schema for input validation
     const isValid = signinSchema.safeParse(req.body);
-    if(! isValid){
+    if(! isValid.success){
         res.json({
             success: false,
             data: "the inputs are invalid"

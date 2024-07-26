@@ -12,6 +12,10 @@ export async function userSignin(req,res,next){
             id: userId
     },JWT_SECRET);
 
+    // add the token in the headers authorization for authenticate request purpose
+    // it is used by the authMiddleware (may neaded or not)
+    req.headers.authorization = 'Bearer '+token;
+    console.log(req.headers.authorization)
     res.status(200).json({
         msg: "user signin sucessfully",
         data: {
