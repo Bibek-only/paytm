@@ -22,6 +22,14 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route
+        path="dashbord/"
+        element={
+          <Suspense>
+            <DashBord />
+          </Suspense>
+        }
+      ></Route>
+      <Route
         path="signin/"
         element={
           <Suspense>
@@ -34,14 +42,6 @@ const router = createBrowserRouter(
         element={
           <Suspense>
             <Signup />
-          </Suspense>
-        }
-      ></Route>
-      <Route
-        path="dashbord/"
-        element={
-          <Suspense>
-            <DashBord />
           </Suspense>
         }
       ></Route>
