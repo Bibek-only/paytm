@@ -20,5 +20,9 @@ const balanceAtom = atom({
     key: "balanceAtom",
     default: 0
 })
+const searchUserAtom = atom({
+    key: "searchUserAtom",
+    default: ""
+})
 
-export {firstNameAtom, lastNameAtom, emailAtom, passwordAtom, balanceAtom}
+export {firstNameAtom, lastNameAtom, emailAtom, passwordAtom, balanceAtom , searchUserAtom}

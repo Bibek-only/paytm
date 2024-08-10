@@ -6,25 +6,28 @@ import { userUrl, accUrl } from '../consant.js'
 import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import {allUserAtom} from "../store/atom/allUserInDbAtom.jsx"
 import {
   firstNameAtom,
   lastNameAtom,
   emailAtom,
-  balanceAtom
+  balanceAtom,
+  searchUserAtom
 } from "../store/atom/userInfoAtom.jsx";
 const DashBord = (timeOut) => {
   const [firstName, setFirstName] = useRecoilState(firstNameAtom);
   const [lastName, setLastName] = useRecoilState(lastNameAtom);
   const [email, setEmail] = useRecoilState(emailAtom);
   const [balance,setBalance] = useRecoilState(balanceAtom);
-
+  const [allUser,setAllUser] = useRecoilState(allUserAtom);
+  const [searchUser,setSearchUser] = useRecoilState(searchUserAtom);
   
   // function to delay 1 sec
-  async function wait(){
+  async function wait(time){
     return new Promise((userinfoRes,rej)=>{
       setTimeout(() => {
         userinfoRes("wait sucessfull")
-      }, 1000);
+      }, time);
     })
   }
 
@@ -33,7 +36,7 @@ const DashBord = (timeOut) => {
   // logic to chech that the user is signed in to the applicatin on not or not
   useEffect(()=>{
     ;(async ()=>{
-      await wait()
+      await wait(1000)
       // ftetch the curently signed in user data and set it to the atoms
       const userinfoRes = await axios.get(`${userUrl}getuserinfo/`,{
         headers:{
@@ -47,6 +50,9 @@ const DashBord = (timeOut) => {
         }
       })
 
+      
+     
+
       // set the atom values according to the logged in user
       setBalance(balanceRes.data.data.balance)
       setFirstName(userinfoRes.data.data.firstName)
@@ -55,13 +61,34 @@ const DashBord = (timeOut) => {
 
     })();
     if(! localStorage.getItem("token")){
-      setTimeout(()=>{
+      ;(async ()=>{
+        await wait(500);
         navigate("/signup")
-      },500)
+      })();
     }
-  })
 
+    
+
+  },[])
+
+  //  find all the use that are currently present in the server and set it to allUserAtom
+   async function getAllUserFun(){
+
+    const allUserRes = await axios.get(`${userUrl}findall?filter=${searchUser}`)
+    setAllUser(allUserRes.data.data);
+    
+
+   }
   
+  // useEffect for find all user from data base
+  useEffect(()=>{    
+  const timeId = setTimeout(() => {
+    getAllUserFun()
+  }, 1000);
+  return () => clearTimeout(timeId)
+    
+  },[searchUser])
+
 
   return (
     <div className='db-parent w-screen h-screen bg-gray-400 flex justify-center items-center'>
@@ -87,13 +114,20 @@ const DashBord = (timeOut) => {
           </div>
           <div className="userSearch flex flex-col gap-4 mb-8">
           <h1>{`${firstName} ${lastName}`}</h1>
-          <InputBox prop={{type:"text", class:"border w-full text-xl px-2 py-1 rounded-xl", placeholder:"Search user", onChange:(e)=>{console.log(e.target.value)}  }}></InputBox>
+          <InputBox prop={{type:"text", class:"border w-full text-xl px-2 py-1 rounded-xl", placeholder:"Search user", onChange:(e)=>{setSearchUser(e.target.value)}  }}></InputBox>
           </div>
 
           {/* all the user list from the server */}
           <div className="allUsers overflow-y-scroll max-h-72">
-            <SendMoney prop={{name: "Bibek", index: 1, onClick:()=>{} }}></SendMoney>
-            <SendMoney prop={{name: "Gyana", index: 2, onClick:()=>{} }}></SendMoney>
+
+            {/*  write the logic to send the send money cards */}
+            {
+              allUser.map((e)=>{
+                return(
+                  <SendMoney prop={{userName:e.userName.split('@')[0] , index: allUser.indexOf(e)+1, onClick:()=>{console.log("hello")} }}></SendMoney>
+                )
+              })
+            }
             
           </div>
         </div>
