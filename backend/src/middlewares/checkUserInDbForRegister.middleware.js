@@ -2,14 +2,21 @@ import {signupSchema} from "../models/zodSchemas.validation.js"
 import User from "../models/User.model.js"
 export async function checkUserInDb(req,res,next){
     const body = req.body;
+    //check all datafield is present or not
+    if(body.userName == null || body.userName == ""){
+        res.status(400).json({
+            status: 400,
+            msg: "all datafield must required"
+        })
+        return
+    }
     
     // zod schema for input validation
     const isValid = signupSchema.safeParse(req.body);
     
     if(! isValid.success){
-        res.json({
-            success: false,
-            data: "the inputs are invalid"
+        res.status(400).json({
+            msg: "the input validation is not satisfied"
         })
         return
     }
@@ -23,6 +30,8 @@ export async function checkUserInDb(req,res,next){
 
     
 
-    res.send("the user is already exist try another userName")
+    res.status(400).json({
+        msg:  "the email is already taken try another one"
+    })
 
 }

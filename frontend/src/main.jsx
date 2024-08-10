@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
+import { RecoilRoot } from "recoil";
 import App from "./App.jsx";
 // import Signin from "./pages/Signin.jsx"
 // import Signup from './pages/Signup.jsx'
@@ -57,5 +58,8 @@ const router = createBrowserRouter(
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router}></RouterProvider>
+  <RecoilRoot>
+
+    <RouterProvider router={router}></RouterProvider>
+  </RecoilRoot>
 );

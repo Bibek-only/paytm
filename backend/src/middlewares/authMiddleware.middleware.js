@@ -7,7 +7,10 @@ export  function authMiddleware(req,res,next){
     
     // validating is there any header carray a Bearer token or not
     if(!authHeader || !authHeader.startsWith('Bearer ')){
-        res.status(404).json({msg: "user is not authorized for the operation"})
+        res.status(400).json({
+            status: 404,
+            msg:"The user is not authorized for the request",
+        })
         return;
     }
 
@@ -18,14 +21,17 @@ export  function authMiddleware(req,res,next){
             const tokenValue = jwt.verify(token, JWT_SECRET);
           
             let userId = tokenValue.id;
+            let userInfo = {userName: tokenValue.userName, firstName: tokenValue.firstName, lastName: tokenValue.lastName}
            
             // add the userid in the request object for further use
             req.userId = userId;
+            req.userInfo = userInfo;
             next()
             
 
     }catch(err){
         res.status(404).json({
+            status: 404,
             msg: "some eror in auth middleware",
             error: err
         })
