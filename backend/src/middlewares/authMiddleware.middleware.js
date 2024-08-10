@@ -20,7 +20,9 @@ export  function authMiddleware(req,res,next){
             // decode or extract value from the token
             const tokenValue = jwt.verify(token, JWT_SECRET);
           
+            // extract the user id for further use like get userinfo or account info
             let userId = tokenValue.id;
+            
             let userInfo = {userName: tokenValue.userName, firstName: tokenValue.firstName, lastName: tokenValue.lastName}
            
             // add the userid in the request object for further use
