@@ -9,9 +9,23 @@ in header authorization send the sender jwt token with Bearer
 import mongoose from "mongoose";
 import Account from "../models/Account.model.js";
 import User from "../models/User.model.js";
+import { number } from "zod";
 
 export async function doTransferMoney(req,res,next){
-    // creating the session
+    
+      
+   try {
+      // check the amount and the id is contain the value
+      if(req.body.userId == "" || req.body.userId == null || req.body.amount == null || req.body.amount == "" ){
+         res.status(400).json({
+            status: 400,
+            msg: "all field must contain value"
+         })
+         return;
+      }
+
+
+      // creating the session
     const session = await mongoose.startSession(); 
 
     // start the transation process
@@ -20,7 +34,8 @@ export async function doTransferMoney(req,res,next){
     
     const senderUserInfo = await User.findOne({_id: req.userId}).session()
     const receiverUserInfo = await User.findOne({_id:req.body.userId}).session()
-    const amount = req.body.amount;
+    const amount = Number.parseInt(req.body.amount);
+    
 
     const senderAccountInfo = await Account.findOne({userId: senderUserInfo._id}).session()
     const receiverAccountInfo = await Account.findOne({userId: req.body.userId}).session()
@@ -30,7 +45,8 @@ export async function doTransferMoney(req,res,next){
      if(! senderUserInfo || senderAccountInfo.balance < amount){
             await session.abortTransaction();
             return res.status(400).json({
-                    message: "insufficent balance"
+                     status: 400,
+                     msg: "insufficent balance"
                 })
                 
              }
@@ -40,7 +56,8 @@ export async function doTransferMoney(req,res,next){
     if(! receiverUserInfo){
         await session.abortTransaction();
         return res.status(400).json({
-        message: "no receiver found"
+         status: 400,
+         msg: "no receiver found"
         })
         
         }
@@ -56,6 +73,17 @@ export async function doTransferMoney(req,res,next){
      await session.commitTransaction();
 
      res.status(200).json({
-        message: "tranjaction sucessful"
+        status: 200,
+        msg: "tranjaction sucessful"
      })
+      
+   } catch (error) {
+      res.status(400).json({
+         status: 400,
+         msg: "some error in transaction"
+      })
+   }
+
+      
+    
 }

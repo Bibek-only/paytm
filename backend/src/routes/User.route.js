@@ -1,6 +1,6 @@
 import app from "../app.js";
 import { Router } from "express";
-import { userSignup, userSignin, userUpdate, findAllUsers, getUserInfo } from "../controllers/exportControllers.js";
+import { userSignup, userSignin, userUpdate, findAllUsers, getUserInfo,getReceiverInfo } from "../controllers/exportControllers.js";
 import { authMiddleware, checkUserInDb , checkUserInDbForSignin} from "../middlewares/exportMiddlewares.js"
 const userRouter = Router()
 
@@ -18,5 +18,8 @@ userRouter.route("/findall").get(findAllUsers);
 
 // add the controller and the middleware to find user information like name , userName , balance etc
 userRouter.route("/getuserinfo").get(authMiddleware,getUserInfo)
+
+// add the controller and the middlerware to find receinvr acc info
+userRouter.route("/getreceiverinfo").post(getReceiverInfo)
 
 export default userRouter

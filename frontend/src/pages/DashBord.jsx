@@ -5,8 +5,9 @@ import axios from 'axios'
 import { userUrl, accUrl } from '../consant.js'
 import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {allUserAtom} from "../store/atom/allUserInDbAtom.jsx"
+import { receiverIdAtom } from '../store/atom/paymentAtom.jsx'
 import {
   firstNameAtom,
   lastNameAtom,
@@ -21,6 +22,7 @@ const DashBord = (timeOut) => {
   const [balance,setBalance] = useRecoilState(balanceAtom);
   const [allUser,setAllUser] = useRecoilState(allUserAtom);
   const [searchUser,setSearchUser] = useRecoilState(searchUserAtom);
+  const setReceiverId = useSetRecoilState(receiverIdAtom)
   
   // function to delay 1 sec
   async function wait(time){
@@ -124,7 +126,10 @@ const DashBord = (timeOut) => {
             {
               allUser.map((e)=>{
                 return(
-                  <SendMoney prop={{userName:e.userName.split('@')[0] , index: allUser.indexOf(e)+1, onClick:()=>{console.log("hello")} }}></SendMoney>
+                  <SendMoney key={e.userName.split('@')[0]} prop={{userName:e.userName.split('@')[0] , index: allUser.indexOf(e)+1, onClick:()=>{
+                    setReceiverId(e._id)
+                    navigate("/payment")
+                  } }}></SendMoney>
                 )
               })
             }
