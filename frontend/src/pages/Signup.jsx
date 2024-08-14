@@ -4,6 +4,7 @@ import { userUrl,accUrl } from "../consant.js";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import { NavLink, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 import {
   firstNameAtom,
   lastNameAtom,
@@ -20,24 +21,44 @@ const Signup = () => {
   const [email, setEmail] = useRecoilState(emailAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
   const navigate = useNavigate();
-  async function handelSignup() {
-    
-    const userData = {
-      userName: email,
-      firstName: firstName,
-      lastName: lastName,
-      password: password,
-    };
-    
-    const response = await axios.post(`${userUrl}/signup/`, userData); // request to creat a user
-    // check the status code and accordingly put the user token in local storage
-    if(response.data.status == 200){
-      localStorage.setItem("token",response.data.data.token)
-        navigate("/dashbord")
-    }
-    else{
+
+  // functio to show the toast
+  function showToast(){
+    toast.success('Account created', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark"
       
-    }
+      });
+  }
+
+  async function handelSignup(e) {
+    showToast()
+    e.target.disable = true
+    setTimeout( async () => {
+      e.target.disable = false
+      const userData = {
+        userName: email,
+        firstName: firstName,
+        lastName: lastName,
+        password: password,
+      };
+      
+      const response = await axios.post(`${userUrl}/signup/`, userData); // request to creat a user
+      // check the status code and accordingly put the user token in local storage
+      if(response.data.status == 200){
+        localStorage.setItem("token",response.data.data.token)
+          navigate("/dashbord")
+      }
+      else{
+        
+      }
+    }, 1500);
     
 
   }
@@ -114,8 +135,8 @@ const Signup = () => {
             prop={{
               name: "sign up",
               class: "border w-full text-2xl font-bold py-2",
-              onClick: () => {
-                handelSignup();
+              onClick: (e) => {
+                handelSignup(e);
               },
             }}
           ></Button>
@@ -124,7 +145,20 @@ const Signup = () => {
           </p>
         </div>
       </div>
-      
+        {/*  toast container */}
+        <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+
+/>
     </div>
   );
 };

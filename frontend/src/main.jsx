@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
+import 'react-toastify/dist/ReactToastify.css';
 import App from "./App.jsx";
 // import Signin from "./pages/Signin.jsx"
 // import Signup from './pages/Signup.jsx'

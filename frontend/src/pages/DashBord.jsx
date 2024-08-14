@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {allUserAtom} from "../store/atom/allUserInDbAtom.jsx"
 import { receiverIdAtom } from '../store/atom/paymentAtom.jsx'
+import { ToastContainer, toast } from 'react-toastify';
 import {
   firstNameAtom,
   lastNameAtom,
@@ -26,9 +27,9 @@ const DashBord = (timeOut) => {
   
   // function to delay 1 sec
   async function wait(time){
-    return new Promise((userinfoRes,rej)=>{
+    return new Promise((res,rej)=>{
       setTimeout(() => {
-        userinfoRes("wait sucessfull")
+        res("wait sucessfull")
       }, time);
     })
   }
@@ -62,9 +63,10 @@ const DashBord = (timeOut) => {
       setEmail(userinfoRes.data.data.userName)
 
     })();
+
     if(! localStorage.getItem("token")){
       ;(async ()=>{
-        await wait(500);
+        await wait(1000);
         navigate("/signup")
       })();
     }
@@ -86,11 +88,37 @@ const DashBord = (timeOut) => {
   useEffect(()=>{    
   const timeId = setTimeout(() => {
     getAllUserFun()
-  }, 1000);
+  },500);
   return () => clearTimeout(timeId)
     
   },[searchUser])
 
+  // functio to show the toast
+  function showToast(){
+    toast.success('Loging out', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark"
+      
+      });
+  }
+
+  // function to handel logout
+  function handelLogout(e){
+    showToast()
+    e.target.disable = true
+    setTimeout(()=>{
+      e.target.disable = false
+      localStorage.removeItem("token")
+              navigate("/signin")
+    },1500)
+    
+  }
 
   return (
     <div className='db-parent w-screen h-screen bg-gray-400 flex justify-center items-center'>
@@ -102,9 +130,8 @@ const DashBord = (timeOut) => {
           <div className="userInfo flex items-center mr-14 gap-4 text-2xl font-bold">
             <h1>Hello, <span>{` ${email}`}</span></h1>
             
-            <Button prop={{name: "Log out", class:"border px-4 py-1 rounded-full bg-gray-200 duration-[1000ms] hover:bg-gray-400 ", onClick:()=>{
-              localStorage.removeItem("token")
-              navigate("/signin")
+            <Button prop={{name: "Log out", class:"border px-4 py-1 rounded-full bg-gray-200 duration-[1000ms] hover:bg-gray-400 ", onClick:(e)=>{
+              handelLogout(e)
             }}}></Button>
           </div>
         </div>
@@ -137,6 +164,20 @@ const DashBord = (timeOut) => {
           </div>
         </div>
       </div>
+      {/* toast container */}
+      <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+
+/>
     </div>
     
   )
