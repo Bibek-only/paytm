@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import Account from "../models/Account.model.js";
 import User from "../models/User.model.js";
 import { number } from "zod";
+import PaymentHistory from "../models/PaymentHistory.model.js";
 
 export async function doTransferMoney(req,res,next){
     
@@ -71,6 +72,13 @@ export async function doTransferMoney(req,res,next){
 
      // commit the transaction
      await session.commitTransaction();
+
+     // add the payment history if the transaction is sucessfull
+      await PaymentHistory.create({
+         senderId: req.userId,
+         receiverId: receiverAccountInfo.userId,
+         amount: amount
+      })
 
      res.status(200).json({
         status: 200,
