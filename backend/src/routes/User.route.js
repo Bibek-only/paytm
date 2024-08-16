@@ -1,6 +1,6 @@
 import app from "../app.js";
 import { Router } from "express";
-import { userSignup, userSignin, userUpdate, findAllUsers, getUserInfo,getReceiverInfo, getPaymentHistory } from "../controllers/exportControllers.js";
+import { userSignup, userSignin, userUpdate, findAllUsers, getUserInfo,getReceiverInfo, getPaymentHistory, deleteUserAccount } from "../controllers/exportControllers.js";
 import { authMiddleware, checkUserInDb , checkUserInDbForSignin} from "../middlewares/exportMiddlewares.js"
 
 const userRouter = Router()
@@ -26,4 +26,6 @@ userRouter.route("/getreceiverinfo").post(getReceiverInfo)
 // add the controller and the middleware to find the payment history for the current user
 userRouter.route("/gethistory").get(authMiddleware,getPaymentHistory)
 
+// set up the delete end point for a user to remove the account 
+userRouter.route("/deleteaccount").delete(authMiddleware,deleteUserAccount)
 export default userRouter

@@ -26,7 +26,11 @@ export async function getPaymentHistory(req,res,next){
     }
     
     
-    res.send(paymentHistoryInfos)
+    res.status(200).json({
+        status: 200,
+        msg: "sucessfully find the payment history",
+        data: paymentHistoryInfos
+    })
 
     
     
