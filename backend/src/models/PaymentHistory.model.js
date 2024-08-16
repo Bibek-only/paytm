@@ -16,7 +16,7 @@ const paymentHistorySchema = new mongoose.Schema({
         default: 0,
         required: true
     }
-})
+},{timestamps: true})
 
 const PaymentHistory = mongoose.model("PaymentHistory", paymentHistorySchema)
 export default PaymentHistory

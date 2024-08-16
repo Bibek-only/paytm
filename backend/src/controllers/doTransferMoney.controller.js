@@ -78,6 +78,7 @@ export async function doTransferMoney(req,res,next){
          senderId: req.userId,
          receiverId: receiverAccountInfo.userId,
          amount: amount
+         
       })
 
      res.status(200).json({

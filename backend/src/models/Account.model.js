@@ -11,6 +11,7 @@ const accountSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
+    
 })
 
 const Account = mongoose.model("Account", accountSchema);

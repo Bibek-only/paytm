@@ -1,7 +1,8 @@
 import app from "../app.js";
 import { Router } from "express";
-import { userSignup, userSignin, userUpdate, findAllUsers, getUserInfo,getReceiverInfo } from "../controllers/exportControllers.js";
+import { userSignup, userSignin, userUpdate, findAllUsers, getUserInfo,getReceiverInfo, getPaymentHistory } from "../controllers/exportControllers.js";
 import { authMiddleware, checkUserInDb , checkUserInDbForSignin} from "../middlewares/exportMiddlewares.js"
+
 const userRouter = Router()
 
 // add the middleware and the controller for validation and sign up proccess
@@ -21,5 +22,8 @@ userRouter.route("/getuserinfo").get(authMiddleware,getUserInfo)
 
 // add the controller and the middlerware to find receinvr acc info
 userRouter.route("/getreceiverinfo").post(getReceiverInfo)
+
+// add the controller and the middleware to find the payment history for the current user
+userRouter.route("/gethistory").get(authMiddleware,getPaymentHistory)
 
 export default userRouter

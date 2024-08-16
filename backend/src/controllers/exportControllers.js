@@ -6,5 +6,6 @@ import { findUserBalance } from "./findUserBalance.controller.js";
 import { doTransferMoney } from "./doTransferMoney.controller.js";
 import {getUserInfo} from "./getUserInfo.controller.js"
 import { getReceiverInfo } from "./getReceiverInfo.controller.js";
+import { getPaymentHistory } from "./getPaymentHistory.controller.js";
 
-export {userSignup, userSignin, userUpdate, findAllUsers, findUserBalance,doTransferMoney,getUserInfo, getReceiverInfo}
+export {userSignup, userSignin, userUpdate, findAllUsers, findUserBalance,doTransferMoney,getUserInfo, getReceiverInfo, getPaymentHistory}
