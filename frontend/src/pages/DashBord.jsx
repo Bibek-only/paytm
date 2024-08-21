@@ -38,9 +38,16 @@ const DashBord = (timeOut) => {
 
   // logic to chech that the user is signed in to the applicatin on not or not
   useEffect(()=>{
+
     ;(async ()=>{
-      await wait(1000)
-      // ftetch the curently signed in user data and set it to the atoms
+
+      if(! localStorage.getItem("token")){
+        await wait(1500)
+        navigate("/signup")
+        return;
+      }
+      else{
+         // ftetch the curently signed in user data and set it to the atoms
       const userinfoRes = await axios.get(`${userUrl}getuserinfo/`,{
         headers:{
           Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -61,19 +68,12 @@ const DashBord = (timeOut) => {
       setFirstName(userinfoRes.data.data.firstName)
       setLastName(userinfoRes.data.data.lastName)
       setEmail(userinfoRes.data.data.userName)
+      }
+     
 
     })();
 
-    if(! localStorage.getItem("token")){
-      ;(async ()=>{
-        await wait(1000);
-        navigate("/signup")
-      })();
-    }
-
-    
-
-  },[])
+    },[])
 
   //  find all the use that are currently present in the server and set it to allUserAtom
    async function getAllUserFun(){
