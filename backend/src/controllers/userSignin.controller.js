@@ -23,7 +23,7 @@ export async function userSignin(req,res,next){
     req.headers.authorization = 'Bearer '+token;
     
     res.status(200).json({
-        staus: 200,
+        status: 200,
         msg: "user signin sucessfully",
         data: {
             token: token

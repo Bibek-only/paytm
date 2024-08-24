@@ -1,7 +1,7 @@
 import zod from "zod";
 const signupSchema = zod.object(
     {
-        userName: zod.string(),
+        userName: zod.string().email(),
         password: zod.string(),
         firstName: zod.string(),
         lastName: zod.string()
@@ -9,7 +9,7 @@ const signupSchema = zod.object(
 )
 
 const signinSchema = zod.object({
-    userName: zod.string(),
+    userName: zod.string().email(),
     password: zod.string()
 })
 

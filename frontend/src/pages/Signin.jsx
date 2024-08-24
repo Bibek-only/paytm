@@ -20,8 +20,7 @@ const Signin = () => {
     // disabled the signin button
 
     e.target.disabled = true;
-    console.log(email);
-    console.log(password);
+    
     // sending the data into the body for sign in
     const response = await axios
       .post(`${userUrl}signin/`, {

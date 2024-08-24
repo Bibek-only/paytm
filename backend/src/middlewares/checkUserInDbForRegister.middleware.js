@@ -3,7 +3,7 @@ import User from "../models/User.model.js"
 export async function checkUserInDb(req,res,next){
     const body = req.body;
     //check all datafield is present or not
-    if(body.userName == null || body.userName == ""){
+    if(body.userName == null || body.userName == "" || body.firstName == "" || body.firstName == null || body.password == null || body.password == ""){
         res.status(400).json({
             status: 400,
             msg: "all datafield must required"

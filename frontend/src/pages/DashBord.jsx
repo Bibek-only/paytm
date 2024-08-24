@@ -34,6 +34,11 @@ const DashBord = (timeOut) => {
     })
   }
 
+  function clearOldData(){
+    setFirstName(null);
+    
+  }
+
   const navigate = useNavigate()
 
   // logic to chech that the user is signed in to the applicatin on not or not
@@ -110,12 +115,13 @@ const DashBord = (timeOut) => {
 
   // function to handel logout
   function handelLogout(e){
+    clearOldData()
     showToast()
     e.target.disable = true
     setTimeout(()=>{
       e.target.disable = false
-      localStorage.removeItem("token")
-              navigate("/signin")
+      
+        navigate("/signin")
     },1500)
     
   }

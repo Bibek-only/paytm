@@ -1,7 +1,7 @@
 import {signinSchema} from "../models/zodSchemas.validation.js"
 import User from "../models/User.model.js"
 export async function checkUserInDbForSignin(req,res,next){
-    const body = req.body;
+    
     
     // zod schema for input validation
     const isValid = signinSchema.safeParse(req.body);
@@ -18,7 +18,7 @@ export async function checkUserInDbForSignin(req,res,next){
     const userInfo = req.body;
 
     // check if the user not provide some info
-    if(userInfo.userName == null || userInfo.userName == ""){
+    if(userInfo.userName == null || userInfo.userName == "" || userInfo.password == null || userInfo.password == "" ){
         res.status(400).json({
             status: 400,
             msg: "all information must needed"
