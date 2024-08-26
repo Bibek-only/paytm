@@ -1,17 +1,16 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import App from "./App.jsx";
-// import Signin from "./pages/Signin.jsx"
-// import Signup from './pages/Signup.jsx'
-// import DashBord from './pages/DashBord.jsx'
-// import Payment from './pages/Payment.jsx'
 import { lazy } from "react";
 const Signin = lazy(() => import("./pages/Signin.jsx"));
 const Signup = lazy(() => import("./pages/Signup.jsx"));
 const DashBord = lazy(() => import("./pages/DashBord.jsx"));
 const Payment = lazy(() => import("./pages/Payment.jsx"));
+const AccountInfo = lazy(() => import("./pages/AccountInfo.jsx"));
+const DeleteAccount = lazy(() => import("./pages/DeleteAccount.jsx"));
+const UpdateAccount = lazy(() => import("./pages/UpdateAccount.jsx"));
 import "./index.css";
 import {
   createBrowserRouter,
@@ -28,6 +27,30 @@ const router = createBrowserRouter(
         element={
           <Suspense>
             <DashBord />
+          </Suspense>
+        }
+      ></Route>
+      <Route
+        path="account/"
+        element={
+          <Suspense>
+            <AccountInfo></AccountInfo>
+          </Suspense>
+        }
+      ></Route>
+      <Route
+        path="account/delete-account/"
+        element={
+          <Suspense>
+            <DeleteAccount></DeleteAccount>
+          </Suspense>
+        }
+      ></Route>
+      <Route
+        path="account/update-account/"
+        element={
+          <Suspense>
+            <UpdateAccount></UpdateAccount>
           </Suspense>
         }
       ></Route>
@@ -60,7 +83,6 @@ const router = createBrowserRouter(
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RecoilRoot>
-
     <RouterProvider router={router}></RouterProvider>
   </RecoilRoot>
 );
