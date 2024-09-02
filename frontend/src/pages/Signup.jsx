@@ -1,80 +1,52 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { userUrl, accUrl } from "../consant.js";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-  firstNameAtom,
-  lastNameAtom,
-  emailAtom,
-  passwordAtom,
-} from "../store/atom/userInfoAtom.jsx";
-import { useRecoilState } from "recoil";
 import Tc from "../store/toasts/Tc.jsx";
 import { sucessToast } from "../store/toasts/sucessToast.js";
 import { errorToast } from "../store/toasts/errorToast.js";
+import { useRecoilState } from "recoil";
+import { userUrl } from "../consant.js";
+import {
+  emailAtom,
+  firstNameAtom,
+  lastNameAtom,
+  passwordAtom,
+} from "../store/atom/logedinUserInfoAtom.jsx";
 
 const Signup = () => {
-  // defineing the state management functions to update the atom
+  const [email, setEmail] = useRecoilState(emailAtom);
   const [firstName, setFirstName] = useRecoilState(firstNameAtom);
   const [lastName, setLastName] = useRecoilState(lastNameAtom);
-  const [email, setEmail] = useRecoilState(emailAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
   const navigate = useNavigate();
 
-  // functon to clear the old data
-  function clearOldData(){
-    setFirstName(null);
-    setLastName(null);
-    setEmail(null);
-    setPassword(null);
-  }
-
-  // useEffect to clear old data
-  useEffect(()=>{
-    clearOldData();  
-  },[])
-  
-  async function handelSignup(e) {
+  async function handelSignup(e, userData) {
+    //disabled the sign up button
     e.target.disabled = true;
-    
-    // sending the data to the backend for signup process
-    const signupResponse = await axios
-      .post(`${userUrl}/signup/`, {
-        userName: email,
-        firstName: firstName,
-        lastName: lastName,
-        password: password
-    })
-      .catch((err) => {
-        errorToast("check the email and password");
-        setTimeout(() => {
-          e.target.disabled = false;
-        }, 2000);
-        return;
-      });
+    setTimeout(() => {
+      e.target.disabled = false;
+    }, 1500);
 
-    // check the status code for sign up process
-    if (!signupResponse.data.status == 200) {
-      errorToast("some error in registering kindly check all infos")
-      setTimeout(() => {
-        e.target.disabled = false;
-      }, 1500);
-      return;
+    try{
+
+      const signupRes = await axios.post(`${userUrl}signup/`, userData)
+      if (signupRes.data.status === 200) {
+        sucessToast("sign up the user");
+        localStorage.setItem("token", `Bearer ${signupRes.data.data.token}`);
+        setTimeout(()=>{
+          navigate("/dashbord")
+        },1500)
+        return;
+      }
+    }catch (error) {
+      errorToast(error.response.data.msg)
+      return
     }
-    // check the status code for sign up process
-    if (signupResponse.data.status == 200) {
-      
-      localStorage.setItem("token", signupResponse.data.data.token);
-      clearOldData();
-      sucessToast("Registering the user");
-      setTimeout(() => {
-        e.target.disabled = false;
-        navigate("/dashbord");
-      }, 1500);
-      return;
-    }
+    
+
+
   }
 
   return (
@@ -114,7 +86,7 @@ const Signup = () => {
         <div>
           <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Sign in to Flowbite
+              Register in Flowbite
             </h2>
             <div className="mt-8 space-y-6" action="#">
               <div>
@@ -200,7 +172,12 @@ const Signup = () => {
                   class:
                     "w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
                   onClick: (e) => {
-                    handelSignup(e);
+                    handelSignup(e, {
+                      userName: email,
+                      firstName: firstName,
+                      lastName: lastName,
+                      password: password,
+                    });
                   },
                 }}
               ></Button>

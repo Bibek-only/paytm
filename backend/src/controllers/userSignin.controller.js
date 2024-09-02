@@ -1,21 +1,19 @@
 import User from "../models/User.model.js"
+import Account from "../models/Account.model.js"
 import jwt from "jsonwebtoken"
 import {JWT_SECRET} from "../constants.js"
 
 export async function userSignin(req,res,next){
     const userInfo = req.body;
     const user = await User.findOne(userInfo);
-    
-    // create the jwt token
-    const userId = user._id;
-    const firstName = user.firstName;
-    const lastName = user.lastName;
-    const userName = user.userName.split('@')[0];
+    const balance = await Account. findOne({userId: user._id});
+    console.log(balance.balance)
     const token = jwt.sign({
-            id: userId,
-            userName: userName,
-            firstName: firstName,
-            lastName: lastName
+            id: user._id,
+            userName: user.userName,
+            firstName: user.lastName,
+            lastName: user.lastName,
+            balance: balance.balance
     },JWT_SECRET);
 
     // add the token in the headers authorization for authenticate request purpose

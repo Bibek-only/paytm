@@ -39,7 +39,7 @@ const router = createBrowserRouter(
         }
       ></Route>
       <Route
-        path="account/delete-account/"
+        path="account/delete/"
         element={
           <Suspense>
             <DeleteAccount></DeleteAccount>
@@ -47,7 +47,7 @@ const router = createBrowserRouter(
         }
       ></Route>
       <Route
-        path="account/update-account/"
+        path="account/update/"
         element={
           <Suspense>
             <UpdateAccount></UpdateAccount>

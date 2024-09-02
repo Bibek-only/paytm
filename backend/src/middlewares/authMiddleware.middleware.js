@@ -23,7 +23,7 @@ export  function authMiddleware(req,res,next){
             // extract the user id for further use like get userinfo or account info
             let userId = tokenValue.id;
             
-            let userInfo = {userName: tokenValue.userName, firstName: tokenValue.firstName, lastName: tokenValue.lastName}
+            let userInfo = {userName: tokenValue.userName, firstName: tokenValue.firstName, lastName: tokenValue.lastName, balance: tokenValue.balance}
            
             // add the userid in the request object for further use
             req.userId = userId;

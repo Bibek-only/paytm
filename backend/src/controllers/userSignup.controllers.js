@@ -11,7 +11,7 @@ export const userSignup = async (req,res,next) =>{
        const firstName = user.firstName;
        const lastName = user.lastName; 
        
-       // initialize a random balance to the user between 1000-10000
+       // initialize a random balance to the user between 1000-10000 
        const userBalance = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
        const newAccount = await Account.create({
         userId: userId, 
@@ -22,10 +22,11 @@ export const userSignup = async (req,res,next) =>{
        
        // create the jwt token
         const token = jwt.sign({
-                id: userId,
-                userName: userName,
-                firstName: firstName,
-                lastName: lastName
+                id: user._id,
+                userName: user.userName,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                balance: userBalance
         },JWT_SECRET)
 
         // send the response with status code

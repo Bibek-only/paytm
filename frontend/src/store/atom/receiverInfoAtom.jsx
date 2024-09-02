@@ -1,12 +1,16 @@
 import { atom } from "recoil";
 
-
-const recevierInfoAtom = atom({
-    key: "receiverInfoAtom",
-    default: {
-        firstName: "",
-        lastName: ""
-    }
+export const recFirstNameAtom = atom({
+    key: "receiverNameAtom",
+    default: ""
 })
 
-export {recevierInfoAtom}
+export const recLastNameAtom = atom({
+    key: "recLastNameAtom",
+    default: ""
+})
+
+export const recIdAtom = atom({
+    key: "recId",
+    default: ""
+})

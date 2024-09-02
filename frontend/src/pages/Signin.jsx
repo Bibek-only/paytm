@@ -2,48 +2,43 @@ import React from "react";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import { NavLink } from "react-router-dom";
-import { emailAtom, passwordAtom } from "../store/atom/userInfoAtom";
-import { errorSelector, useRecoilState } from "recoil";
 import { userUrl } from "../consant";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { sucessToast } from "../store/toasts/sucessToast.js";
 import { errorToast } from "../store/toasts/errorToast.js";
 import Tc from "../store/toasts/Tc.jsx";
-
+import { emailAtom, passwordAtom } from "../store/atom/logedinUserInfoAtom.jsx";
+import { useRecoilState } from "recoil";
 const Signin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useRecoilState(emailAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
 
-  async function handelSignin(e) {
-    // disabled the signin button
-
+  async function handelSignin(e, userInfo) {
     e.target.disabled = true;
-    
-    // sending the data into the body for sign in
-    const response = await axios
-      .post(`${userUrl}signin/`, {
-        userName: email,
-        password: password,
-      })
-      .catch((err) => {
-        errorToast("check the email and password");
-        setTimeout(() => {
-          e.target.disabled = false;
-        }, 2000);
-        return;
-      });
+    setTimeout(() => {
+      e.target.disabled = false;
+    }, 1500);
 
-    // if the request is sucessfull it set the authorization token
-    if (response.data.status == 200) {
-      localStorage.setItem("token", response.data.data.token);
-      sucessToast("Login successfull");
-      setTimeout(() => {
-        e.target.disabled = false;
-        navigate("/dashbord");
-      }, 1500);
-      return;
+    try {
+      const signinRes = await axios.post(`${userUrl}signin/`,userInfo);
+      if (signinRes.data.status === 200) {
+        sucessToast("Sign in the user");
+        localStorage.setItem('token', `Bearer ${signinRes.data.data.token}`)
+        setTimeout(() => {
+          navigate("/dashbord");
+        }, 1500);
+      }
+
+      if(signinRes.data.status === 400){
+        errorToast("something went wrong")
+        return
+      }
+    } catch (error) {
+      
+      errorToast(error.response.data.msg)
+      return
     }
   }
 
@@ -131,7 +126,10 @@ const Signin = () => {
                   class:
                     "w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
                   onClick: (e) => {
-                    handelSignin(e);
+                    handelSignin(e, {
+                      userName: email,
+                      password: password,
+                    });
                   },
                 }}
               ></Button>

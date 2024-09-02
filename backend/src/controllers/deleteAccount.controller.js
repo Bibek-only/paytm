@@ -43,7 +43,7 @@ export async function deleteUserAccount(req, res, next) {
   } catch (err) {
     res.status(400).json({
       status: 400,
-      msg: "some error in the delete endpoint xxx",
+      msg: "some error in the delete endpoint",
     });
     return;
   }

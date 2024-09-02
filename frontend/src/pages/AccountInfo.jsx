@@ -57,7 +57,7 @@ const AccountInfo = () => {
             Track Your Transactions, Secure Your Spending.
           </h1>
           {/* history card */}
-          <div className="card-containder overflow-y-scroll  max-h-72 scrollbar">
+          <div className="card-containder overflow-y-scroll pr-6 max-h-72 scrollbar">
             {/* card */}
             <HistoryCard></HistoryCard>
           </div>
