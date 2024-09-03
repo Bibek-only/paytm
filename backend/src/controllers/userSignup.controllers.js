@@ -26,7 +26,7 @@ export const userSignup = async (req,res,next) =>{
                 userName: user.userName,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                balance: userBalance
+                
         },JWT_SECRET)
 
         // send the response with status code

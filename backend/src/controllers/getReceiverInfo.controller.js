@@ -19,8 +19,9 @@ export async function getReceiverInfo(req,res,next){
         status: 200,
         msg: "sucessfully get the receiver user info",
         data: {
+            userName: receiverInfo.userName,
             firstName: receiverInfo.firstName,
-            lastName: receiverInfo.lastName 
+            lastName: receiverInfo.lastName,
         }
     })
 }

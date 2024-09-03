@@ -22,23 +22,23 @@ const Signin = () => {
     }, 1500);
 
     try {
-      const signinRes = await axios.post(`${userUrl}signin/`,userInfo);
+      const signinRes = await axios.post(`${userUrl}signin/`, userInfo);
+      
       if (signinRes.data.status === 200) {
         sucessToast("Sign in the user");
-        localStorage.setItem('token', `Bearer ${signinRes.data.data.token}`)
+        localStorage.setItem("token", `Bearer ${signinRes.data.data.token}`);
         setTimeout(() => {
           navigate("/dashbord");
         }, 1500);
       }
 
-      if(signinRes.data.status === 400){
-        errorToast("something went wrong")
-        return
+      if (signinRes.data.status === 400) {
+        errorToast("something went wrong");
+        return;
       }
     } catch (error) {
-      
-      errorToast(error.response.data.msg)
-      return
+      errorToast(error.response.data.msg);
+      return;
     }
   }
 

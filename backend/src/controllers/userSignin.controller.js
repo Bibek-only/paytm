@@ -5,15 +5,16 @@ import {JWT_SECRET} from "../constants.js"
 
 export async function userSignin(req,res,next){
     const userInfo = req.body;
+    
     const user = await User.findOne(userInfo);
     const balance = await Account. findOne({userId: user._id});
-    console.log(balance.balance)
+    
     const token = jwt.sign({
             id: user._id,
             userName: user.userName,
-            firstName: user.lastName,
+            firstName: user.firstName,
             lastName: user.lastName,
-            balance: balance.balance
+            
     },JWT_SECRET);
 
     // add the token in the headers authorization for authenticate request purpose

@@ -4,6 +4,7 @@ export async function findAllUsers(req,res,next){
     
     const filter = req.query.filter || "";
     
+    
    
     
     // search user basis on first name and last name

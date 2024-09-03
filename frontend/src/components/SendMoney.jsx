@@ -3,10 +3,10 @@
 import React from 'react'
 const SendMoney = ({prop}) => {
   return (
-    <div className="pay-card flex items-center justify-between lg:justify-around  font-thin py-2">
+    <div className="pay-card flex items-center justify-between lg:justify-around  font-thin py-2 text-gray-400  hover:text-white duration-500">
               <h1 className="w-44  flex gap-2 items-start">
-                <span className="font-bold">{prop.index}</span>
-                <div className="inf">
+                <span className="">{`${prop.index}.`}</span>
+                <div className="info">
                   <h1>{`${prop.firstName} ${prop.lastName}`}</h1>
                   <p className="text-sm font-thin">{`user: ${prop.userName}`}</p>
                 </div>

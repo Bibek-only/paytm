@@ -1,126 +1,168 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import { userUrl, accUrl } from '../consant'
-import Button from '../components/Button'
-import InputBox from '../components/InputBox'
-import { amountAtom } from '../store/atom/paymentAtom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { receiverIdAtom } from '../store/atom/paymentAtom'
-import {  useNavigate } from 'react-router-dom'
-import {recevierInfoAtom} from "../store/atom/receiverInfoAtom"
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useEffect } from "react";
+import axios from "axios";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { accUrl } from "../consant";
+import Button from "../components/Button";
+import InputBox from "../components/InputBox";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { amountAtom } from "../store/atom/paymentAtom.jsx";
+import { recIdAtom } from "../store/atom/receiverInfoAtom.jsx";
+import {
+  recEmailAtom,
+  recFirstNameAtom,
+  recLastNameAtom,
+} from "../store/atom/receiverInfoAtom.jsx";
+import { sucessToast } from "../store/toasts/sucessToast.js";
+import { errorToast } from "../store/toasts/errorToast.js";
+import Tc from "../store/toasts/Tc.jsx";
 const Payment = () => {
-  const [receiverInfo,setReceiverInfo] = useRecoilState(recevierInfoAtom)
+  // set up the atoms
   const navigate = useNavigate();
-
   const [amount, setAmount] = useRecoilState(amountAtom);
-  const receiverId = useRecoilValue(receiverIdAtom)
-
-  // functio to show the toast
-  function showToast(){
-    toast.success('paying', {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark"
-      
-      });
+  const recId = useRecoilValue(recIdAtom);
+  const recFirstName = useRecoilValue(recFirstNameAtom);
+  const recLastName = useRecoilValue(recLastNameAtom);
+  const email = useRecoilValue(recEmailAtom);
+  // delay functio that execute a functio after some time
+  function delay(callback, e) {
+    const tid = setTimeout(() => {
+      e.target.disabled = false;
+      callback();
+    }, 1500);
+    return;
   }
-  async function handelPayment(e){
-    showToast()
-    e.target.disable = true
-    setTimeout(async ()=>{
-      
-      e.target.disable = false
-      const paymentRes = await axios.put(`${accUrl}transfermoney`,{
-        userId: receiverId,
-        amount: Number.parseInt(amount)
-    },{
-        headers:{
-          Authorization:`Bearer ${localStorage.getItem("token")}`
+
+  async function handelPayment(e) {
+    e.target.disabled = true; // disabled the payment button
+
+    try {
+      const paymentRes = await axios.put(
+        `${accUrl}transfermoney`,
+        {
+          userId: recId,
+          amount: Number.parseInt(amount),
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
-      })
-  
-      if(paymentRes.status == 200){
-        setReceiverInfo({
-          firstName: "",
-          lastName: ""
-        })
-        navigate("/dashbord")
+      );
+
+      if (!paymentRes.data.status === 200) {
+        errorToast("Transation failed");
+        delay(() => {
+          navigate("/dashbord");
+        }, e);
       }
 
-    },1500)
-
+      sucessToast("Transation successfull !");
+      delay(() => {
+        navigate("/dashbord");
+      }, e);
+    } catch (error) {
+      //show the error toast
+      errorToast("Transation failed");
+      delay(() => {
+        navigate("/dashbord");
+      }, e);
+    }
   }
 
-  async function getReceiverInfoFun(){
-    const receiverInfoRes = await axios.post(`${userUrl}getreceiverinfo`,{
-       receiverId: receiverId
-    })
-
-    if(receiverInfoRes.status == 200){
-      setReceiverInfo({
-        firstName: receiverInfoRes.data.data.firstName,
-        lastName: receiverInfoRes.data.data.lastName
-      })
+  useEffect(() => {
+    if (recId == "" || recId == null) {
+      navigate("/dashbord");
+      return;
     }
-    
-  }
 
+    return () => {
+      setAmount(0);
+    };
+  }, []);
 
-  useEffect(()=>{
-   
-    if(receiverId == "" || receiverId == null){
-      navigate("/dashbord")
-    }
-    else{
-      getReceiverInfoFun()
-    }
-  },[])
-
-  
   return (
-    <div className='paymentParent h-screen w-screen flex justify-center items-center bg-gray-400 ' >
-        <div className="paymentCard h-2/4 w-1/4 bg-white flex flex-col items-center rounded-xl ">
-            <h1 className="text-2xl font-bold my-12" >Send money</h1>
-            <div className="receiverInfo w-full mb-12 flex flex-col gap-6">
-              <div className="userName w-full flex items-center ml-14 text-xl font-bold gap-4">
-                <div className="logo h-11 w-11 rounded-full border flex justify-center items-center bg-green-500">{receiverInfo.firstName[0]}</div>
-                <p>{`${receiverInfo.firstName} ${receiverInfo.lastName}`}</p>
-              </div>
-              <InputBox prop={{type:"text", class:"ml-14 border-2 w-5/6 text-xl px-2 py-1 rounded-xl outline-none", placeholder:"Enter amount", onChange:(e)=>{ setAmount(e.target.value) }}} ></InputBox>
-            </div>
-            <Button prop={{name: "Pay now", class:"bg-green-500  px-12 py-2 rounded-xl font-bold text-xl", onClick:(e)=>{ 
-              // check the user id and 
-              if( receiverId == "" || receiverId == null || amount == "" || amount == null){
-                navigate("/dashbord")
-              }
-              else{
-                handelPayment(e)
-              }
-              
-             }}}></Button>
+    <section className="bg-gray-900 min-h-screen flex items-center justify-center">
+      <div className="w-full max-md:h-screen max-w-xl p-6 space-y-8 sm:p-8  rounded-lg shadow-xl bg-gray-800">
+        <div className="heading-con ">
+          <h2 className="text-2xl font-bold text-white mb-2">Pay money</h2>
+          <p className="text-xl font-bold text-white">
+            Send payments securely to anyone, anywhere.
+          </p>
         </div>
-        {/* toast containder */}
-        <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="dark"
 
-/>
-    </div>
-  )
-}
+        <div className="receiverInfo w-full mb-12 flex flex-col">
+          <p className="text-xl font-bold text-white ml-2 mb-2">To</p>
+          <div className="userName w-full flex items-center   gap-4 text-xl font-bold text-white">
+            <div className="logo h-11 w-11 rounded-full border flex justify-center items-center bg-green-600">
+              {recFirstName[0]}
+            </div>
+            <div className="userinfo felx flex-col">
+              <p>{`${recFirstName} ${recLastName}`}</p>
+              <p className="font-thin">{`user: ${email}`}</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            for="email"
+            className="block mb-2 text-xl font-medium text-white"
+          >
+            Enter you amount
+          </label>
+          <InputBox
+            prop={{
+              type: "number",
+              class:
+                "border  text-lg rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500",
+              placeholder: "Enter amount",
+              onChange: (e) => {
+                setAmount(e.target.value);
+              },
+            }}
+          ></InputBox>
+        </div>
+        <Button
+          prop={{
+            name: "Pay now",
+            class:
+              "w-full px-5 py-3  font-medium text-center bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 sm:w-auto mr-2",
+            onClick: (e) => {
+              if (amount === 0 || amount === null) {
+                navigate("/dashbord");
+                return;
+              }
 
-export default Payment
+              handelPayment(e);
+            },
+          }}
+        ></Button>
+
+        <div className="mt-8 space-y-6 ">
+          <NavLink to="/dashbord" className=" text-blue-500 hover:underline font-medium text-lg inline-flex items-center">
+            Go back
+            <svg
+              className="w-3.5 h-3.5 ms-2 rtl:rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </NavLink>
+        </div>
+      </div>
+
+      <Tc></Tc>
+    </section>
+  );
+};
+
+export default Payment;
