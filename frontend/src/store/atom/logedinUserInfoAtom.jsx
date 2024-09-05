@@ -20,3 +20,14 @@ export const balanceAtom = atom({
     default: 0,
     key: "balanceAtom"
 })
+export const paymentHistoryAtom = atom({
+    default: [{
+        senderName: "unknown",
+            senderEmail: "unknown",
+            receiverName: "unknow",
+            receiverEmail: "unkonw",
+            amount: "0",
+            time: "xx xx 00 0000 00:00:00"
+    }],
+    key: "paymentHistoryAtom"
+})

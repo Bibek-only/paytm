@@ -76,7 +76,11 @@ export async function doTransferMoney(req,res,next){
      // add the payment history if the transaction is sucessfull
       await PaymentHistory.create({
          senderId: req.userId,
+         senderName: `${senderUserInfo.firstName} ${senderUserInfo.lastName}`,
+         senderUserName:   senderUserInfo.userName,
          receiverId: receiverAccountInfo.userId,
+         receiverName: `${receiverUserInfo.firstName} ${receiverUserInfo.lastName}`,
+         receiverUserName: receiverUserInfo.userName,
          amount: amount
          
       })
