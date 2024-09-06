@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 import { JWT_SECRET } from "../constants.js"
-
+import User from "../models/User.model.js"
 export  function authMiddleware(req,res,next){
     
     const authHeader = req.headers.authorization;
@@ -9,7 +9,7 @@ export  function authMiddleware(req,res,next){
     if(!authHeader || !authHeader.startsWith('Bearer ')){
         res.status(400).json({
             status: 404,
-            msg:"The user is not authorized for the request",
+            msg:"xThe user is not authorized for the request",
         })
         return;
     }
@@ -17,18 +17,20 @@ export  function authMiddleware(req,res,next){
     // extract the token
     const token = authHeader.split(' ')[1];
     try{    
+           (async ()=>{
             // decode or extract value from the token
             const tokenValue = jwt.verify(token, JWT_SECRET);
-          
-            // extract the user id for further use like get userinfo or account info
             let userId = tokenValue.id;
+            const userInfoRes = await User.findOne({_id: userId});
             
-            let userInfo = {userName: tokenValue.userName, firstName: tokenValue.firstName, lastName: tokenValue.lastName}
-           
+            let userInfo = {userName: tokenValue.userName, firstName: userInfoRes.firstName, lastName: userInfoRes.lastName}
+          
+            
             // add the userid in the request object for further use
             req.userId = userId;
             req.userInfo = userInfo;
             next()
+           })();
             
 
     }catch(err){

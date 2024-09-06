@@ -29,24 +29,20 @@ const Signup = () => {
       e.target.disabled = false;
     }, 1500);
 
-    try{
-
-      const signupRes = await axios.post(`${userUrl}signup/`, userData)
+    try {
+      const signupRes = await axios.post(`${userUrl}signup/`, userData);
       if (signupRes.data.status === 200) {
         sucessToast("sign up the user");
         localStorage.setItem("token", `Bearer ${signupRes.data.data.token}`);
-        setTimeout(()=>{
-          navigate("/dashbord")
-        },1500)
+        setTimeout(() => {
+          navigate("/dashbord");
+        }, 1500);
         return;
       }
-    }catch (error) {
-      errorToast(error.response.data.msg)
-      return
+    } catch (error) {
+      errorToast(error.response.data.msg);
+      return;
     }
-    
-
-
   }
 
   return (

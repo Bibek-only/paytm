@@ -6,6 +6,13 @@ export async function userUpdate(req,res,next){
         const userInfo = req.body;
 
         const isValid = userInfoUpdateSchema.safeParse(userInfo);
+        if(userInfo.firstName == "" || userInfo.firstName == null || userInfo.password =="" || userInfo.password == null){
+            res.status(404).json({
+                status: 404,
+                msg: "info not get updated some erro occur"
+            })
+            return
+        }
         if(! isValid.success){
             res.status(404).json({
                 msg: "in valid inputs"
@@ -18,11 +25,13 @@ export async function userUpdate(req,res,next){
         },userInfo)
         .then(()=>{
             res.status(200).json({
+                status: 200,
                 msg: "info updated successfully"
             })
         })
         .catch((err)=>{
             res.status(404).json({
+                status: 404,
                 msg: "info not get updated some erro occur"
             })
             
