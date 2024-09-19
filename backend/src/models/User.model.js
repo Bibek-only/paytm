@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { optional } from "zod";
 
 const userSchema = new mongoose.Schema({
     userName:{
@@ -12,7 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     lastName:{
         type: String,
-        required: true
+        default: ""
     },
     password:{
         type: String,

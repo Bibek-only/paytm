@@ -1,7 +1,7 @@
 import User from "../models/User.model.js"
 import Account from "../models/Account.model.js"
 import jwt from "jsonwebtoken"
-import {JWT_SECRET} from "../constants.js"
+
 
 export async function userSignin(req,res,next){
     const userInfo = req.body;
@@ -15,7 +15,7 @@ export async function userSignin(req,res,next){
             firstName: user.firstName,
             lastName: user.lastName,
             
-    },JWT_SECRET);
+    },process.env.JWT_SECRET);
 
     // add the token in the headers authorization for authenticate request purpose
     // it is used by the authMiddleware (may neaded or not)

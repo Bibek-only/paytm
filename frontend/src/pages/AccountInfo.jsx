@@ -17,10 +17,10 @@ import { errorToast } from "../store/toasts/errorToast.js";
 const AccountInfo = () => {
   const navigate = useNavigate();
   // set the atoms for values
-  const firstName = useRecoilValue(firstNameAtom);
-  const lastName = useRecoilValue(lastNameAtom);
-  const email = useRecoilValue(emailAtom);
-  const balance = useRecoilValue(balanceAtom);
+  const [firstName,setFirstName] = useRecoilState(firstNameAtom);
+  const [lastName,setLastName] = useRecoilState(lastNameAtom);
+  const [email,setEmail] = useRecoilState(emailAtom);
+  const [balance,setBalance] = useRecoilState(balanceAtom);
   const [paymentHistory, setPaymentHistory] =
     useRecoilState(paymentHistoryAtom);
 
@@ -70,41 +70,45 @@ const AccountInfo = () => {
     };
   }, []);
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <section className="bg-gray-900 min-h-screen flex items-center justify-center">
       <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
         <div>
-          <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8  rounded-lg shadow-xl bg-gray-800">
+            <h2 className="text-2xl font-bold  text-white">
               Account Details
             </h2>
             <div className="mt-8 space-y-6">
               <div className="flex items-cente gap-2">
-                <label className=" text-sm font-medium text-gray-900 dark:text-white">
+                <label className=" text-sm font-medium text-white">
                   Email:
                 </label>
                 <p className="text-sm w-full text-white ">{`${email}`}</p>
               </div>
               <div className="flex items-cente gap-2">
-                <label className=" text-sm font-medium text-gray-900 dark:text-white">
+                <label className=" text-sm font-medium  text-white">
                   Name:
                 </label>
                 <p className="text-sm w-full text-white ">{`${firstName} ${lastName}`}</p>
               </div>
               <div className="flex items-cente gap-2">
-                <label className=" text-sm font-medium text-gray-900 dark:text-white">
+                <label className=" text-sm font-medium text-white">
                   Balance:
                 </label>
                 <p className="text-sm w-full text-white">{`${balance}`}</p>
               </div>
-              <div className="text-sm font-medium text-gray-900 dark:text-white">
+              <div className="text-sm font-medium text-white">
                 Want to leave? Click here to{" "}
                 <Button
                   prop={{
                     name: "Log out.",
                     class:
-                      "text-blue-600 hover:underline dark:text-blue-500 cursor-pointer",
+                      " hover:underline text-blue-500 cursor-pointer",
                     onClick: (e) => {
                       e.target.disabled = true;
+                      setFirstName("U");
+                      setLastName("");
+                      setEmail("");
+                      setBalance(0);
                       errorToast("Loging out the user");
                       //show toast
                       delay(() => {
@@ -119,7 +123,7 @@ const AccountInfo = () => {
                 prop={{
                   name: "Update account",
                   class:
-                    "w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2",
+                    "w-full px-5 py-3 text-base font-medium text-center text-white  rounded-lg   focus:ring-blue-300 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mr-2",
                   onClick: (e) => {
                     e.target.disabled = true;
                     delay(() => {
@@ -132,7 +136,7 @@ const AccountInfo = () => {
                 prop={{
                   name: "Delete account",
                   class:
-                    "w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2",
+                    "w-full px-5 py-3 text-base font-medium text-center text-white  rounded-lg  focus:ring-4  sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mr-2",
                   onClick: (e) => {
                     e.target.disabled = true;
                     delay(() => {
@@ -141,11 +145,11 @@ const AccountInfo = () => {
                   },
                 }}
               ></Button>
-              <div className="text-sm font-medium text-gray-900 dark:text-white">
+              <div className="text-sm font-medium text-white">
                 Go back to{" "}
                 <NavLink
                   to="/dashbord"
-                  className="text-blue-600 hover:underline dark:text-blue-500 cursor-pointer"
+                  className=" hover:underline text-blue-500 cursor-pointer"
                 >
                   home
                 </NavLink>
@@ -154,7 +158,7 @@ const AccountInfo = () => {
           </div>
         </div>
         <div className="flex flex-col justify-start gap-2">
-          <h1 className="mb-4 text-lg font-extrabold tracking-tight leading-none text-gray-900 md:text-xl lg:text-2xl dark:text-white">
+          <h1 className="mb-4 text-lg font-extrabold tracking-tight leading-none  md:text-xl lg:text-2xl text-white">
             Track Your Transactions, Secure Your Spending.
           </h1>
           {/* history card */}

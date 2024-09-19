@@ -107,7 +107,8 @@ const DashBord = () => {
           </div>
         </nav>
         <div className="buttom text-lg lg:text-2xl lg:font-semibold font-bold mx-4 mt-4 flex flex-col gap-4">
-          <p>Your balance = {balance}</p>
+          <p>User: {email}</p>
+          <p>Your balance: {balance}</p>
           <div>
             <label for="password" className="block mb-2 ">
               Search users
@@ -123,7 +124,7 @@ const DashBord = () => {
               }}
             ></InputBox>
           </div>
-          <div className="pay-container mt-6 w-full flex flex-col gap-4 max-h-96 lg:h-72 overflow-y-scroll pr-4 lg:scrollbar ">
+          <div className="pay-container mt-6 w-full flex flex-col gap-4 max-h-80 lg:h-72 overflow-y-scroll pr-4 lg:scrollbar">
             {/* pay card start */}
             {allUser.map((e) => {
               return (

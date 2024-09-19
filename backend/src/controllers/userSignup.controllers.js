@@ -1,7 +1,7 @@
 import User from "../models/User.model.js"
 import Account from "../models/Account.model.js"
 import jwt from "jsonwebtoken";
-import {JWT_SECRET} from "../constants.js"
+
 export const userSignup = async (req,res,next) =>{
         
         // logic to sing up or register a user
@@ -27,7 +27,7 @@ export const userSignup = async (req,res,next) =>{
                 firstName: user.firstName,
                 lastName: user.lastName,
                 
-        },JWT_SECRET)
+        },process.env.JWT_SECRET)
 
         // send the response with status code
         res.json({

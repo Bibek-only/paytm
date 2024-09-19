@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken"
-import { JWT_SECRET } from "../constants.js"
 import User from "../models/User.model.js"
 export  function authMiddleware(req,res,next){
     
@@ -19,11 +18,11 @@ export  function authMiddleware(req,res,next){
     try{    
            (async ()=>{
             // decode or extract value from the token
-            const tokenValue = jwt.verify(token, JWT_SECRET);
+            const tokenValue = jwt.verify(token, process.env.JWT_SECRET);
             let userId = tokenValue.id;
             const userInfoRes = await User.findOne({_id: userId});
             
-            let userInfo = {userName: tokenValue.userName, firstName: userInfoRes.firstName, lastName: userInfoRes.lastName}
+            let userInfo = {userName: userInfoRes.userName, firstName: userInfoRes.firstName, lastName: userInfoRes.lastName}
           
             
             // add the userid in the request object for further use

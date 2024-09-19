@@ -71,17 +71,17 @@ const DeleteAccount = () => {
     return ()=> {setPassword("")};
   },[])
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <section className="bg-gray-900 min-h-screen flex items-center justify-center">
       
           
-          <div className="w-full  lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800 ">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div className="w-full max-md:h-screen lg:max-w-xl p-6 space-y-8 sm:p-8  rounded-lg shadow-xl bg-gray-800 ">
+          <h2 className="text-2xl font-bold  text-white">
             Delete your account
           </h2>
           <div className="mt-8 space-y-6">
             <div className="flex items-cente gap-2">
               <label
-                className=" text-sm font-medium text-gray-900 dark:text-white"
+                className=" text-sm font-medium  text-white"
               >
                 Email:
               </label>
@@ -89,7 +89,7 @@ const DeleteAccount = () => {
             </div>
             <div className="flex items-cente gap-2">
               <label
-                className=" text-sm font-medium text-gray-900 dark:text-white"
+                className=" text-sm font-medium text-white"
               >
                 Name:
               </label>
@@ -97,17 +97,17 @@ const DeleteAccount = () => {
             </div>
             <div className="flex items-cente gap-2">
               <label
-                className=" text-sm font-medium text-gray-900 dark:text-white"
+                className=" text-sm font-medium text-white"
               >
                 Balance: 
               </label>
               <p className="text-sm w-full text-white">{balance}</p>
             </div>
             <div>
-                        <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter your password</label>
+                        <label for="email" className="block mb-2 text-sm font-medium text-white">Enter your password</label>
                         <InputBox prop={{
                           type: "text",
-                          class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                          class: " border  text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500",
                           onChange: (e)=>{
                             setPassword(e.target.value);
                           }
@@ -125,9 +125,9 @@ const DeleteAccount = () => {
 
             </Button>
             
-            <div className="text-sm font-medium text-gray-900 dark:text-white">
+            <div className="text-sm font-medium text-white">
               
-            <NavLink to="/account" className="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center">Go back
+            <NavLink to="/account" className="text-blue-500 hover:underline font-medium text-lg inline-flex items-center">Go back
                 <svg className="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                 </svg>

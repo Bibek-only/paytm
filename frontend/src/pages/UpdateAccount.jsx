@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { userUrl } from "../consant.js";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,6 +18,7 @@ const UpdateAccount = () => {
   const [password, setPassword] = useRecoilState(passwordAtom);
   const [firstName, setFristName] = useRecoilState(firstNameAtom);
   const [lastName, setLastName] = useRecoilState(lastNameAtom);
+
   const navigate = useNavigate();
   function delay(callback, time, e) {
     setTimeout(() => {
@@ -59,7 +60,7 @@ const UpdateAccount = () => {
       errorToast("cant update the information");
       delay(
         () => {
-          navigate("/account")
+          navigate("/dashbord")
         },
         1500,
         e
@@ -67,6 +68,7 @@ const UpdateAccount = () => {
       return;
     }
   }
+
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center">
@@ -80,7 +82,7 @@ const UpdateAccount = () => {
             Features and Secure Your Digital Experience for the Long Term.
           </p>
           <NavLink
-            to="/account"
+            to="/dashbord"
             className="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
           >
             Go Home

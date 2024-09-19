@@ -47,19 +47,19 @@ const Signup = () => {
 
   return (
     // main box that cover the body
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <section className="bg-gray-900 min-h-screen flex items-center justify-center">
       <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
         <div className="flex flex-col justify-center">
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+          <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none  md:text-5xl lg:text-6xl text-white">
             Empowering your financial freedom
           </h1>
-          <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+          <p className="mb-6 text-lg font-normal lg:text-xl text-gray-400">
             At PayVibe, we harness innovation and technology to create lasting
             value and fuel financial growth.
           </p>
           <NavLink
             to="/dashbord"
-            className="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
+            className="text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
           >
             Go back to home
             <svg
@@ -80,15 +80,15 @@ const Signup = () => {
           </NavLink>
         </div>
         <div>
-          <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Register in Flowbite
+          <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8  rounded-lg shadow-xl bg-gray-800">
+            <h2 className="text-2xl font-bold text-white">
+              Register in PayVibe
             </h2>
             <div className="mt-8 space-y-6" action="#">
               <div>
                 <label
                   for="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-white"
                 >
                   Your email
                 </label>
@@ -96,7 +96,7 @@ const Signup = () => {
                   prop={{
                     type: "text",
                     class:
-                      "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                      " border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white ",
                     placeholder: "Enter email",
                     onChange: (e) => {
                       setEmail(e.target.value);
@@ -107,7 +107,7 @@ const Signup = () => {
               <div>
                 <label
                   for="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-white"
                 >
                   Your first name
                 </label>
@@ -115,7 +115,7 @@ const Signup = () => {
                   prop={{
                     type: "text",
                     class:
-                      "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                      " border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white  ",
                     placeholder: "Enter first name",
                     onChange: (e) => {
                       setFirstName(e.target.value);
@@ -126,7 +126,7 @@ const Signup = () => {
               <div>
                 <label
                   for="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-white"
                 >
                   your last name
                 </label>
@@ -134,7 +134,7 @@ const Signup = () => {
                   prop={{
                     type: "text",
                     class:
-                      "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                      " border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white ",
                     placeholder: "Enter last name",
                     onChange: (e) => {
                       setLastName(e.target.value);
@@ -145,7 +145,7 @@ const Signup = () => {
               <div>
                 <label
                   for="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-white"
                 >
                   Your password
                 </label>
@@ -153,7 +153,7 @@ const Signup = () => {
                   prop={{
                     type: "text",
                     class:
-                      "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                      " border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white",
                     placeholder: "Enter password",
                     onChange: (e) => {
                       setPassword(e.target.value);
@@ -166,7 +166,7 @@ const Signup = () => {
                 prop={{
                   name: "sign up",
                   class:
-                    "w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
+                    "w-full px-5 py-3 text-base font-medium text-center text-white  rounded-lg  sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-800",
                   onClick: (e) => {
                     handelSignup(e, {
                       userName: email,
@@ -177,9 +177,9 @@ const Signup = () => {
                   },
                 }}
               ></Button>
-              <div className="text-sm font-medium text-gray-900 dark:text-white">
+              <div className="text-sm font-medium text-white">
                 Already have an account?{" "}
-                <span className="text-blue-600 hover:underline dark:text-blue-500">
+                <span className=" hover:underline text-blue-500">
                   <NavLink to="/signin">Log in</NavLink>
                 </span>
               </div>
