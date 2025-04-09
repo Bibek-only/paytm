@@ -5,9 +5,9 @@ import accoutnRouter from "./routes/Account.route.js"
 import cors from "cors"
 
 // config the .env file
-dotenv.config({path: '../.env'});
+import 'dotenv/config'
 
-
+console.log("dburl", process.env.DATABASE_URL)
 const app = express();
 
 

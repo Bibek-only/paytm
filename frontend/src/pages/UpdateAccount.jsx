@@ -49,7 +49,7 @@ const UpdateAccount = () => {
         sucessToast("sucessfully update the infos");
         delay(
           () => {
-            navigate("/dashbord");
+            navigate("/");
             return;
           },
           1500,
@@ -60,7 +60,7 @@ const UpdateAccount = () => {
       errorToast("cant update the information");
       delay(
         () => {
-          navigate("/dashbord")
+          navigate("/")
         },
         1500,
         e
@@ -82,7 +82,7 @@ const UpdateAccount = () => {
             Features and Secure Your Digital Experience for the Long Term.
           </p>
           <NavLink
-            to="/dashbord"
+            to="/"
             className="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
           >
             Go Home

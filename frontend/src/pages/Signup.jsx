@@ -35,7 +35,7 @@ const Signup = () => {
         sucessToast("sign up the user");
         localStorage.setItem("token", `Bearer ${signupRes.data.data.token}`);
         setTimeout(() => {
-          navigate("/dashbord");
+          navigate("/");
         }, 1500);
         return;
       }
@@ -58,7 +58,7 @@ const Signup = () => {
             value and fuel financial growth.
           </p>
           <NavLink
-            to="/dashbord"
+            to="/"
             className="text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
           >
             Go back to home

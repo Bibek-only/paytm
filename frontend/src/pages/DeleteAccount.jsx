@@ -65,7 +65,7 @@ const DeleteAccount = () => {
   }
   useEffect(()=>{
     if(email === "" || email === null){
-      navigate("/dashbord")
+      navigate("/")
       return;
     }
     return ()=> {setPassword("")};

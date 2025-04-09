@@ -53,26 +53,26 @@ const Payment = () => {
       if (!paymentRes.data.status === 200) {
         errorToast("Transation failed");
         delay(() => {
-          navigate("/dashbord");
+          navigate("/");
         }, e);
       }
 
       sucessToast("Transation successfull !");
       delay(() => {
-        navigate("/dashbord");
+        navigate("/");
       }, e);
     } catch (error) {
       //show the error toast
       errorToast("Transation failed");
       delay(() => {
-        navigate("/dashbord");
+        navigate("/");
       }, e);
     }
   }
 
   useEffect(() => {
     if (recId == "" || recId == null) {
-      navigate("/dashbord");
+      navigate("/");
       return;
     }
 
@@ -129,7 +129,7 @@ const Payment = () => {
               "w-full px-5 py-3  font-medium text-center bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 sm:w-auto mr-2",
             onClick: (e) => {
               if (amount === 0 || amount === null) {
-                navigate("/dashbord");
+                navigate("/");
                 return;
               }
 
@@ -139,7 +139,7 @@ const Payment = () => {
         ></Button>
 
         <div className="mt-8 space-y-6 ">
-          <NavLink to="/dashbord" className=" text-blue-500 hover:underline font-medium text-lg inline-flex items-center">
+          <NavLink to="/" className=" text-blue-500 hover:underline font-medium text-lg inline-flex items-center">
             Go back
             <svg
               className="w-3.5 h-3.5 ms-2 rtl:rotate-180"

@@ -50,7 +50,7 @@ const AccountInfo = () => {
 
   useEffect(() => {
     if (email === "Unknow") {
-      navigate("/dashbord");
+      navigate("/");
       return;
     }
     delay(() => {
@@ -148,7 +148,7 @@ const AccountInfo = () => {
               <div className="text-sm font-medium text-white">
                 Go back to{" "}
                 <NavLink
-                  to="/dashbord"
+                  to="/"
                   className=" hover:underline text-blue-500 cursor-pointer"
                 >
                   home
